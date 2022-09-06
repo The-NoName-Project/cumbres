@@ -135,6 +135,8 @@ return [
     */
 
     'providers' => [
+        //laravel passport
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
