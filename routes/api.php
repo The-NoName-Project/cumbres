@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,11 +15,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/', function () {
+    return response()->json(['message' => 'CUMBRES API Laravel'], 200);;
+});
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'signup']);
+Route::post('/login', [Auth\AuthController::class, 'login']);
+Route::post('/register', [Auth\AuthController::class, 'signup']);
+Route::get('/school', [Api\SchoolController::class, 'index']);
+Route::get('/level', [Api\LevelController::class, 'index']);
+Route::get('/role', [Api\RolesController::class, 'index']);
+
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [Auth\AuthController::class, 'user']);
+    Route::post('/logout', [Auth\AuthController::class, 'logout']);
 });

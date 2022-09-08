@@ -23,13 +23,24 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'app' => 'required|string',
+            'apm' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'role_id' => 'integer|required',
+            'school_id' => 'integer',
+            'level_id' => 'integer',
         ]);
         $user = new User([
             'name' => $request->name,
+            'app' => $request->app,
+            'apm' => $request->apm,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'role_id' => $request->role_id,
+            'school_id' => $request->school_id,
+            'level_id' => $request->level_id,
+            'active' => true,
         ]);
         $user->save();
         //create token
