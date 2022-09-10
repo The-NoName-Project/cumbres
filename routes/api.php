@@ -29,4 +29,10 @@ Route::get('/role', [Api\RolesController::class, 'index']);
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/user', [Auth\AuthController::class, 'user']);
     Route::post('/logout', [Auth\AuthController::class, 'logout']);
+    Route::get('/question', [Api\QuestionController::class, 'index']);
+    Route::post('/question', [Api\QuestionController::class, 'store']);
+    Route::get('/all-users', function(){
+        $u =\App\Models\User::all();
+        return response()->json($u, 200);
+    });
 });
