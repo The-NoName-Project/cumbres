@@ -32,16 +32,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(auth()->id());
-        // dd($question);
-        //el usuario solo puede contestar el cuestionario una vez al dia
-        //obtenemos la fecha actual
-        $date = date('Y-m-d');
-        //verificamos si el usuario ya contesto el cuestionario
-        if(Question::where('user_id', Auth::user()->id)->whereDate('created_at', $date)->exists()){
-            return response()->json(['message' => 'Ya fue contestado el cuestionario, solo se puede contestar una vez'], 200);
-        }else{
-            $user_id = auth()->id();
             $request->validate([
                 //q1 no puede pasar del numero 5
                 'q1' => 'required|integer|max:5',
@@ -67,12 +57,11 @@ class QuestionController extends Controller
                 //total es el resultado de la suma de las respuestas
                 'total' => $request->q1 + $request->q2 + $request->q3 + $request->q4 + $request->q5 + $request->q6 + $request->q7 + $request->q8,
                 //obtenemos el id del usuario que esta logeado a traves del token
-                'user_id' => $user_id,
+                'user_id' => $request->user_id,
             ]);
 
             $question->save();
             return response()->json(['message' => 'Encuesta contestada correctamente'], 201);
-        }
     }
 
     /**
