@@ -10,11 +10,12 @@ class Activities extends Model
     use HasFactory;
 
     protected $fillable = [
-        'personone',
-        'persontwo',
+        'peopleone',
+        'peopletwo',
         'sport',
         'visor',
         'scoreone',
         'scoretwo',
+        'date',
     ];
 }

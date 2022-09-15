@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreSportsRequest;
-use App\Http\Requests\UpdateSportsRequest;
+use App\Http\Controllers\Controller;
 use App\Models\Sports;
+use Illuminate\Http\Request;
 
 class SportsController extends Controller
 {
@@ -15,26 +15,17 @@ class SportsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $sports = Sports::all();
+        return response()->json($sports, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSportsRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSportsRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -51,24 +42,13 @@ class SportsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sports  $sports
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sports $sports)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSportsRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Sports  $sports
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSportsRequest $request, Sports $sports)
+    public function update(Request $request, Sports $sports)
     {
         //
     }

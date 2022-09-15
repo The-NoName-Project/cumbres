@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\School;
+use App\Models\Level;
+use App\Models\Roles;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -43,6 +46,22 @@ class AuthController extends Controller
             'active' => true,
         ]);
         $user->save();
+        $user = User::find($user->id);
+        //si existe el campo school_id
+        if($user->school_id){
+            $school = School::find($user->school_id);
+            $user->school = $school;
+        }
+        //si existe el campo level_id
+        if($user->level_id){
+            $level = Level::find($user->level_id);
+            $user->level = $level;
+        }
+        //si existe el campo role_id
+        if($user->role_id){
+            $role = Roles::find($user->role_id);
+            $user->role = $role;
+        }
         //create token
         $tokenResult = $user->createToken('Personal Access Token')->accessToken;
         return response()->json([
@@ -73,6 +92,23 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
+        $user = User::find($user->id);
+        //si existe el campo school_id
+        if($user->school_id){
+            $school = School::find($user->school_id);
+            $user->school = $school;
+        }
+        //si existe el campo level_id
+        if($user->level_id){
+            $level = Level::find($user->level_id);
+            $user->level = $level;
+        }
+        //si existe el campo role_id
+        if($user->role_id){
+            $role = Roles::find($user->role_id);
+            $user->role = $role;
+        }
+
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
@@ -108,7 +144,26 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        //recuperar el usuario desde el token
+        $user = Auth::user()->id;
+        $user = User::find($user);
+        //si existe el campo school_id
+        if($user->school_id){
+            $school = School::find($user->school_id);
+            $user->school = $school;
+        }
+        //si existe el campo level_id
+        if($user->level_id){
+            $level = Level::find($user->level_id);
+            $user->level = $level;
+        }
+        //si existe el campo role_id
+        if($user->role_id){
+            $role = Roles::find($user->role_id);
+            $user->role = $role;
+        }
+        return response()->json($user);
+
     }
 }
 

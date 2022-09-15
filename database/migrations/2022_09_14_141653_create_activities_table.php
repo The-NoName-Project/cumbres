@@ -15,16 +15,18 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('personone');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('persontwo');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsigjnedBigInteger('sport');
-            $table->foreign('sport_id')->references('id')->on('sports');
+            $table->unsignedBigInteger('peopleone');
+            $table->foreign('peopleone')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('peopletwo');
+            $table->foreign('peopletwo')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('sport');
+            $table->foreign('sport')->references('id')->on('sports')->onDelete('cascade');
             $table->unsignedBigInteger('visor');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('visor')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('scoreone');
             $table->bigInteger('scoretwo');
+            //fecha y hora del partido
+            $table->timestamp('date');
             $table->timestamps();
         });
     }

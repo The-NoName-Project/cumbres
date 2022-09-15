@@ -7,6 +7,7 @@ use App\Models\Roles;
 use App\Models\Level;
 use App\Models\User;
 use App\Models\School;
+use App\Models\Sports;
 
 class DatabaseSeeder extends Seeder
 {
@@ -85,6 +86,26 @@ class DatabaseSeeder extends Seeder
             'name' => 'Instituto Cumbres Bosques',
         ],
         );
+
+        Sports::factory()->create([
+            'name' => 'Futbol',
+        ]);
+        Sports::factory()->create([
+            'name' => 'Basquetbol',
+        ]);
+        Sports::factory()->create([
+            'name' => 'Voleibol',
+        ]);
+        Sports::factory()->create([
+            'name' => 'Beisbol',
+        ]);
+        Sports::factory()->create([
+            'name' => 'Softbol',
+        ]);
+        Sports::factory()->create([
+            'name' => 'Atletismo',
+        ]);
+
 
         User::factory()->create([
             'name' => 'Admin',
