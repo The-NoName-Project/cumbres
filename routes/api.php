@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
         $u =\App\Models\User::all();
         return response()->json($u, 200);
     });
-
+    Route::get('/sports', [Api\SportsController::class, 'index']);
     Route::get('/activities', [Api\ActivitiesController::class, 'index']);
     Route::post('/activities', [Api\ActivitiesController::class, 'store']);
     Route::get('/activities/{id}', [Api\ActivitiesController::class, 'show']);
