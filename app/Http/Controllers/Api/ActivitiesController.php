@@ -78,8 +78,7 @@ class ActivitiesController extends Controller
         $activity->visor = $request->visor;
         $activity->scoreone = $request->scoreone;
         $activity->scoretwo = $request->scoretwo;
-        //recibe la fecha y la formatea para que se guarde en la base de datos
-        $activity->date = date('Y-m-d H:i:s', strtotime($request->date));
+        $activity->date= $request->date;
         $activity->save();
         return response()->json($activity, 201);
     }
