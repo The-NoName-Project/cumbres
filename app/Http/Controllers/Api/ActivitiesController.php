@@ -77,7 +77,6 @@ class ActivitiesController extends Controller
         $activity->visor = $request->visor;
         $activity->scoreone = $request->scoreone;
         $activity->scoretwo = $request->scoretwo;
-        $activity->date= $request->date;
         $activity->save();
         return response()->json($activity, 201);
     }
