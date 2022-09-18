@@ -16,6 +16,5 @@ class Activities extends Model
         'visor',
         'scoreone',
         'scoretwo',
-        'date',
     ];
 }

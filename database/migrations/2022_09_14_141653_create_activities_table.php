@@ -26,7 +26,6 @@ class CreateActivitiesTable extends Migration
             $table->bigInteger('scoreone');
             $table->bigInteger('scoretwo');
             //fecha y hora del partido
-            $table->text('date');
             $table->timestamps();
         });
     }

@@ -68,7 +68,6 @@ class ActivitiesController extends Controller
             'visor' => 'required',
             'scoreone' => 'required',
             'scoretwo' => 'required',
-            'date' => 'required',
         ]);
 
         $activity = new Activities();
