@@ -70,7 +70,17 @@ class ActivitiesController extends Controller
             'scoretwo' => 'required',
             'date' => 'required',
         ]);
-        $activity = Activities::create($request->all());
+
+        $activity = new Activities();
+        $activity->peopleone = $request->peopleone;
+        $activity->peopletwo = $request->peopletwo;
+        $activity->sport = $request->sport;
+        $activity->visor = $request->visor;
+        $activity->scoreone = $request->scoreone;
+        $activity->scoretwo = $request->scoretwo;
+        //recibe la fecha y la formatea para que se guarde en la base de datos
+        $activity->date = date('Y-m-d H:i:s', strtotime($request->date));
+        $activity->save();
         return response()->json($activity, 201);
     }
 
