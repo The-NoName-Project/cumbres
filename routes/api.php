@@ -31,8 +31,21 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/logout', [Auth\AuthController::class, 'logout']);
     Route::get('/question', [Api\QuestionController::class, 'index']);
     Route::get('/all-users', function(){
-        $u =\App\Models\User::all();
-        return response()->json($u, 200);
+        //consulta todos los usuarios y remplaza el id de la escuela por el nombre de la escuela
+        $users = \App\Models\User::all();
+        foreach ($users as $user) {
+            $user->school = \App\Models\School::find($user->school_id);
+        }
+        //consulta todos los usuarios y remplaza el id del rol por el nombre del rol
+        foreach ($users as $user) {
+            $user->role = \App\Models\Roles::find($user->role_id);
+        }
+        //consulta todos los usuarios y remplaza el id del level por el nombre del level
+        foreach ($users as $user) {
+            $user->level = \App\Models\Level::find($user->level_id);
+        }
+        return response()->json($users, 200);
+        //return response()->json($u, 200);
     });
     Route::get('/sports', [Api\SportsController::class, 'index']);
     Route::get('/activities', [Api\ActivitiesController::class, 'index']);
