@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question;
+use App\Models\User;
+use App\Models\School;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,7 +75,24 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $data=Question::all();
+        //recorremos el array de datos
+        foreach ($data as $item) {
+            //si existe el campo user_id lo remplazamos por toda la informacion del usuario
+            if (isset($item->user_id)) {
+                $user = User::find($item->user_id);
+                $item->user_id = $user;
+                //si el usuario tiene el campo school_id lo remplazamos por toda la informacion de la escuela
+                if (isset($user->school_id)) {
+                    $school = School::find($user->school_id);
+                    $user->school_id = $school;
+                }
+            }
+        }
+
+        //retornamos el array de datos
+
+        return response()->json($data, 200);
     }
 
     /**
