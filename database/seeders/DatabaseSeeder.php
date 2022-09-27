@@ -111,6 +111,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'app'   => 'Admin',
             'apm'  => 'Admin',
+            'gender' => 'Masculino',
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
             'role_id' => 1,
@@ -120,10 +121,24 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Fernando',
             'app'   => 'Duarte',
-            'apm'  => 'Villavivcencio',
+            'apm'  => 'Villavicencio',
+            'gender' => 'Masculino',
             'email' => 'fer@gmail.com',
             'password' => bcrypt('Fernando13.1'),
             'role_id' => 1,
         ]);
+
+
+        User::factory()->create([
+            'name' => 'Arturo',
+            'app'   => 'Romero',
+            'apm'  => 'Gonzalez',
+            'gender' => 'Masculino',
+            'email' => 'arturo@gmail.com',
+            'password' => bcrypt('Arturo123'),
+            'role_id' => 2,
+        ]);
+
+
     }
 }

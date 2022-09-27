@@ -23,6 +23,7 @@ class User extends Authenticatable
         'app',
         'apm',
         'email',
+        'gender',
         'password',
         'role_id',
         'school_id',
