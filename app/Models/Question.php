@@ -21,5 +21,9 @@ class Question extends Model
         'q8',
         'total',
         'user_id',
+        'sport_id',
+        'school_id',
+        'level_id',
+        'gender',
     ];
 }

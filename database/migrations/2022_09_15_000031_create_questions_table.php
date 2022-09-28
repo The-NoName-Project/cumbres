@@ -25,8 +25,15 @@ class CreateQuestionsTable extends Migration
             $table->integer('q7');
             $table->integer('q8');
             $table->bigInteger('total');
+            $table->unsignedBigInteger('school_id')->nullable();
+            $table->foreign('school_id')->references('id')->on('schools');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('sport_id')->nullable();
+            $table->foreign('sport_id')->references('id')->on('sports');
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->foreign('level_id')->references('id')->on('levels');
+            $table->text('gender')->nullable();
             $table->timestamps();
         });
     }

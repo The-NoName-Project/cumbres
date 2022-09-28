@@ -67,6 +67,49 @@ class QuestionController extends Controller
             return response()->json(['message' => 'Encuesta contestada correctamente'], 201);
     }
 
+
+    public function storeVisor(Request $request)
+    {
+            $request->validate([
+                //q1 no puede pasar del numero 5
+                'q1' => 'required|integer|max:5',
+                'q2' => 'required|integer|max:5',
+                'q3' => 'required|integer|max:5',
+                'q4' => 'required|integer|max:5',
+                'q5' => 'required|integer|max:5',
+                'q6' => 'required|integer|max:5',
+                'q7' => 'required|integer|max:5',
+                'q8' => 'required|integer|max:5',
+                'user_id' => 'required|integer',
+                'sport_id' => 'required|integer',
+                'school_id' => 'required|integer',
+                'gender' => 'required',
+            ]);
+
+            $question = new Question([
+                'results' => 1,
+                'q1' => $request->q1,
+                'q2' => $request->q2,
+                'q3' => $request->q3,
+                'q4' => $request->q4,
+                'q5' => $request->q5,
+                'q6' => $request->q6,
+                'q7' => $request->q7,
+                'q8' => $request->q8,
+                //total es el resultado de la suma de las respuestas
+                'total' => $request->q1 + $request->q2 + $request->q3 + $request->q4 + $request->q5 + $request->q6 + $request->q7 + $request->q8,
+                //obtenemos el id del usuario que esta logeado a traves del token
+                'user_id' => $request->user_id,
+                'sport_id' => $request->sport_id,
+                'school_id' => $request->school_id,
+                'level_id' => $request->level_id,
+                'gender' => $request->gender
+            ]);
+
+            $question->save();
+            return response()->json(['message' => 'Encuesta contestada correctamente'], 201);
+    }
+
     /**
      * Display the specified resource.
      *
