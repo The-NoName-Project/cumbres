@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\User;
 use App\Models\School;
+use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -160,6 +161,89 @@ class QuestionController extends Controller
 
         return response()->json($data, 200);
 
+    }
+
+    public function showGender(Question $question)
+    {
+        //consulta para obtener los datos total, genero, user_id de la tabla questions ordenados por total
+        $data = \DB::table('questions')
+            ->select(\DB::raw('sum(total) as total, gender'))
+            ->groupBy('gender')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        //recorremos el array de datos
+        foreach ($data as $item) {
+            //si existe el campo user_id lo remplazamos por toda la informacion del usuario
+            if (isset($item->user_id)) {
+                $user = User::find($item->user_id);
+                $item->user_id = $user;
+                //si el usuario tiene el campo school_id lo remplazamos por toda la informacion de la escuela
+                if (isset($user->school_id)) {
+                    $school = School::find($user->school_id);
+                    $user->school_id = $school;
+                }
+            }
+        }
+        //retornamos el array de datos
+        return response()->json($data, 200);
+    }
+
+    public function showTopUser(Question $question)
+    {
+        //consulta para obtener los datos total, user_id de la tabla questions ordenados por total solo retornando los 10 primeros resultados pero el usuario no debe ser visor ni admin
+        $data = \DB::table('questions')
+            ->select(\DB::raw('sum(total) as total, user_id'))
+            ->where('user_id', '!=', 1)
+            ->where('user_id', '!=', 2)
+            ->where('user_id', '!=', 3)
+            ->groupBy('user_id')
+            ->orderBy('total', 'desc')
+            ->take(10)
+            ->get();
+        //recorremos el array de datos
+        foreach ($data as $item) {
+            //si existe el campo user_id lo remplazamos por toda la informacion del usuario
+            if (isset($item->user_id)) {
+                $user = User::find($item->user_id);
+                $item->user_id = $user;
+                //si el usuario tiene el campo school_id lo remplazamos por toda la informacion de la escuela
+                if (isset($user->school_id)) {
+                    $school = School::find($user->school_id);
+                    $user->school_id = $school;
+                }
+                //si el usuario tiene el campo level_id lo remplazamos por toda la informacion del nivel
+                if (isset($user->level_id)) {
+                    $level = Level::find($user->level_id);
+                    $user->level_id = $level;
+                }
+            }
+        }
+        //retornamos el array de datos
+        return response()->json($data, 200);
+    }
+
+    public function showTopSchool(Question $question)
+    {
+        //consulta para obtener los datos total, school_id de la tabla questions ordenados por total solo retornando los 10 primeros resultados
+        $data = \DB::table('questions')
+            ->select(\DB::raw('sum(total) as total, school_id'))
+            //no se deben mostrar los resultados de la escuela sea null
+            ->where('school_id', '!=', null)
+            ->groupBy('school_id')
+            ->orderBy('total', 'desc')
+            ->take(10)
+            ->get();
+        //recorremos el array de datos
+        foreach ($data as $item) {
+            //si existe el campo school_id lo remplazamos por toda la informacion de la escuela
+            if (isset($item->school_id)) {
+                $school = School::find($item->school_id);
+                $item->school_id = $school;
+            }
+        }
+        //retornamos el array de datos
+        return response()->json($data, 200);
     }
 
     /**

@@ -27,6 +27,9 @@ Route::get('/role', [Api\RolesController::class, 'index']);
 Route::post('/question', [Api\QuestionController::class, 'store']);
 Route::get('/question/all', [Api\QuestionController::class, 'show']);
 Route::get('/results', [Api\QuestionController::class, 'showVisor']);
+Route::get('/gender', [Api\QuestionController::class, 'showGender']);
+Route::get('/top/user', [Api\QuestionController::class, 'showTopUser']);
+Route::get('/top/school', [Api\QuestionController::class, 'showTopSchool']);
 Route::post('/q', [Api\QuestionController::class, 'storeVisor']);
 
 Route::group(['middleware' => 'auth:api'], function(){
