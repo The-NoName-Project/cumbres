@@ -118,8 +118,10 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        $data=Question::all();
-        //recorremos el array de datos
+        //consulta para obtener los datos total y user_id de la tabla questions ordenados por total y sumando los resultados de cada uno que se repite pero no deben que tener el campo de school_id ni level_id ni gender ni sport_id llenos
+        $data = Question::select('total', 'user_id')->where('school_id', null)->where('level_id', null)->where('gender', null)->where('sport_id', null)->orderBy('total', 'desc')->get();
+
+        //recorre el array de datos
         foreach ($data as $item) {
             //si existe el campo user_id lo remplazamos por toda la informacion del usuario
             if (isset($item->user_id)) {
@@ -130,12 +132,16 @@ class QuestionController extends Controller
                     $school = School::find($user->school_id);
                     $user->school_id = $school;
                 }
+                //si el usuario tiene el campo level_id lo remplazamos por toda la informacion del nivel
+                if (isset($user->level_id)) {
+                    $level = Level::find($user->level_id);
+                    $user->level_id = $level;
+                }
             }
         }
 
-        //retornamos el array de datos
-
         return response()->json($data, 200);
+
     }
 
     public function showVisor(Question $question)
