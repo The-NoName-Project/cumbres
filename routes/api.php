@@ -26,6 +26,7 @@ Route::get('/level', [Api\LevelController::class, 'index']);
 Route::get('/role', [Api\RolesController::class, 'index']);
 Route::post('/question', [Api\QuestionController::class, 'store']);
 Route::get('/question/all', [Api\QuestionController::class, 'show']);
+Route::get('/results', [Api\QuestionController::class, 'showVisor']);
 Route::post('/q', [Api\QuestionController::class, 'storeVisor']);
 
 Route::group(['middleware' => 'auth:api'], function(){

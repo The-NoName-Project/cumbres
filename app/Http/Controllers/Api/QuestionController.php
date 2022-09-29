@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\User;
 use App\Models\School;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -136,6 +135,31 @@ class QuestionController extends Controller
         //retornamos el array de datos
 
         return response()->json($data, 200);
+    }
+
+    public function showVisor(Question $question)
+    {
+        //consulta para obtener los datos total y school_id de la tabla questions ordenados por total y sumando los resultados de cada escuela que se repite
+        $data = \DB::table('questions')
+            ->select(\DB::raw('sum(total) as total, school_id'))
+            ->groupBy('school_id')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        //recorremos el array de datos
+
+        foreach ($data as $item) {
+            //si existe el campo school_id lo remplazamos por toda la informacion de la escuela
+            if (isset($item->school_id)) {
+                $school = School::find($item->school_id);
+                $item->school_id = $school;
+            }
+        }
+
+        //retornamos el array de datos
+
+        return response()->json($data, 200);
+
     }
 
     /**
